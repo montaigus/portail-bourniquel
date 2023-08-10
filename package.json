@@ -10,6 +10,7 @@
     "@fullcalendar/interaction": "^6.1.8",
     "@fullcalendar/list": "^6.1.8",
     "@fullcalendar/multimonth": "^6.1.8",
+    "@fullcalendar/react": "^6.1.8",
     "@mui/base": "^5.0.0-beta.9",
     "@mui/material": "^5.14.3",
     "@testing-library/jest-dom": "^5.17.0",
