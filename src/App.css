@@ -12,9 +12,11 @@
   background-color: #6c778d;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   font-size: calc(10px + 4vmin);
   color: white;
+  padding-right: 5%;
+  padding-left: 5%;
   /*position: sticky;
   top: 0px;
   z-index: 1;*/
