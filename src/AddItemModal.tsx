@@ -22,6 +22,16 @@ interface AddItemModalProps {
   selectedDateInfo: DateSelectArg | null;
 }
 
+enum eventLabels {
+  reservation = "Réservation",
+  evenement = "Evénement",
+}
+
+enum eventTypes {
+  reservation = "auto",
+  evenement = "background",
+}
+
 export function AddItemModal({
   isOpen,
   onClose,
@@ -35,6 +45,8 @@ export function AddItemModal({
   const [eventType, setEventType] = useState("auto");
   const [eventName, setEventName] = useState("Nouvel ajout");
   const [disableConfirm, setDisableConfirm] = useState(false);
+  const [eventLabel, setEventLabel] = useState(getLabel());
+  const [eventColor, setEventColor] = useState("#f6b73c");
 
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -44,7 +56,7 @@ export function AddItemModal({
       start: eventDate.start,
       end: eventDate.end,
       display: eventType,
-      color: "green",
+      color: eventColor,
     };
 
     onAddEvent(newEvent);
@@ -58,10 +70,18 @@ export function AddItemModal({
         overlay: {
           zIndex: 2,
         },
+        content: {
+          padding: "0px",
+          backgroundColor: "whitesmoke",
+          inset: "15%",
+        },
       }}
       isOpen={isOpen}
       onRequestClose={onClose}
     >
+      <div className="modal-header">
+        <span>{eventLabel}</span>
+      </div>
       <form className="modal-form" onSubmit={handleFormSubmit}>
         <div className="titleInput">
           <TextField
@@ -69,27 +89,30 @@ export function AddItemModal({
             label="Titre"
             variant="outlined"
             value={eventName}
-            onChange={(e) => setEventName(e.target.value)}
+            onChange={(e) => {
+              setEventName(e.target.value);
+              setEventLabel(getLabel());
+            }}
           ></TextField>
-        </div>
-        <div className="itemTypeInputs">
           <RadioGroup
             name="itemType"
             value={eventType}
             row={true}
+            style={{ marginLeft: "30px" }}
             onChange={(e) => {
               setEventType(e.target.value);
+              setEventLabel(getLabel());
             }}
           >
             <FormControlLabel
               value="auto"
               control={<Radio />}
-              label="Réservation"
+              label={eventLabels.reservation}
             />
             <FormControlLabel
               value="background"
               control={<Radio />}
-              label="Evénement"
+              label={eventLabels.evenement}
             />
           </RadioGroup>
         </div>
@@ -121,25 +144,45 @@ export function AddItemModal({
             />
           </LocalizationProvider>
         </div>
-
-        <Button
-          variant="contained"
-          color="success"
-          type="submit"
-          //?le disabled est décalé d'une action
-          //disabled={disableConfirm}
-        >
-          Confirmer
-        </Button>
-        <Button
-          variant="outlined"
-          color="error"
-          type="button"
-          onClick={onClose}
-        >
-          Abandonner
-        </Button>
+        <div className="modal-colorPicker">
+          <label htmlFor="colorPicker">Couleur de l'ajout : </label>
+          <input
+            type="color"
+            id="colorPicker"
+            value={eventColor}
+            onChange={(e) => setEventColor(e.target.value)}
+          ></input>
+        </div>
+        <div className="modal-buttons">
+          <Button
+            variant="contained"
+            color="success"
+            type="submit"
+            //?le disabled est décalé d'une action
+            //disabled={disableConfirm}
+          >
+            Confirmer
+          </Button>
+          <Button
+            variant="outlined"
+            color="error"
+            type="button"
+            onClick={onClose}
+          >
+            Abandonner
+          </Button>
+        </div>
       </form>
     </ReactModal>
   );
+
+  function getLabel(): string {
+    let resultString: string;
+    if (eventType === eventTypes.reservation.toString())
+      resultString = `Nouvelle réservation`;
+    else if (eventType === eventTypes.evenement)
+      resultString = `Nouvel évenement`;
+    else resultString = "Nouveau";
+    return `${resultString} : ${eventName}`;
+  }
 }
