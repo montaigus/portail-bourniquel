@@ -7,7 +7,7 @@
 }
 
 .App-header {
-  min-height: calc(20px + 7vmin);
+  height: calc(20px + 7vmin);
   text-align: center;
   background-color: #6c778d;
   display: flex;
@@ -17,8 +17,8 @@
   color: white;
   padding-right: 5%;
   padding-left: 5%;
-  /*position: sticky;
-  top: 0px;
+  position: sticky;
+  /*top: 0px;
   z-index: 1;*/
 }
 
@@ -27,4 +27,57 @@
   padding-left: 3%;
   padding-top: 2%;
   padding-bottom: 2%;
+}
+
+.header-title {
+  flex-grow: 8;
+}
+
+.header-placeholder {
+  flex-grow: 1;
+}
+
+.menuButton-span {
+  transition: 0.4s;
+  flex-grow: 1;
+}
+
+.menuButton-span:hover {
+  transition: 0.2s;
+  transform: rotateY(180deg);
+}
+
+.change {
+  transform: rotate(180deg);
+}
+
+.menu {
+  background-color: whitesmoke;
+  height: 100px;
+  display: flex;
+  font-size: calc(8px + 3vmin);
+  font-weight: bold;
+  padding-left: 50px;
+  padding-right: 50px;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.menu > * {
+  display: flex;
+  justify-content: center;
+}
+
+.menu > *:hover {
+  color: red;
+}
+
+.menu > .menu-item {
+  min-width: 200px;
+}
+
+.menu > .menu-close {
+  width: 50px;
+  display: flex;
+  justify-content: center;
 }

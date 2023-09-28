@@ -5,8 +5,10 @@ import listPlugin from "@fullcalendar/list";
 import frLocale from "@fullcalendar/core/locales/fr";
 import FullCalendar from "@fullcalendar/react";
 import { RefObject } from "@fullcalendar/core/preact";
-import { AddItemModal } from "../AddItemModal";
+import { AddItemModal } from "./AddItemModal";
 import React, { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { getEvents } from "../api";
 
 export default function Agenda(): JSX.Element {
   let selectedDateInfo: DateSelectArg | null = null;
@@ -22,6 +24,10 @@ export default function Agenda(): JSX.Element {
     const calendarApi = calendarRef.current.getApi();
     calendarApi.addEvent(newEvent);
   };
+
+  const initialEvents = useQuery(["initialEvents"], getEvents);
+
+  console.log(initialEvents);
 
   return (
     <>
