@@ -27,43 +27,44 @@ export default function Agenda(): JSX.Element {
 
   const initialEvents = useQuery(["initialEvents"], getEvents);
 
-  console.log(initialEvents);
-
   return (
     <>
-      <FullCalendar
-        ref={calendarRef}
-        plugins={[multiMonthPlugin, interactionPlugin, listPlugin]}
-        initialView="multiMonthYear"
-        timeZone="UTC+2"
-        locale={frLocale}
-        multiMonthMaxColumns={2}
-        editable={true}
-        selectable={true}
-        select={(info) => selectFunc(info)}
-        unselectAuto={false}
-        contentHeight="70vmin"
-        displayEventTime={false}
-        headerToolbar={{
-          left: "addItemButton",
-          center: "prev title next",
-          right: "plusButton,minButton",
-        }}
-        customButtons={{
-          addItemButton: {
-            text: "Ajouter",
-            click: () => addItemFunc(),
-          },
-          plusButton: {
-            text: "+",
-            click: () => zoomInFunc(),
-          },
-          minButton: {
-            text: "-",
-            click: () => zoomOutFunc(),
-          },
-        }}
-      />
+      {!initialEvents.isLoading && (
+        <FullCalendar
+          ref={calendarRef}
+          plugins={[multiMonthPlugin, interactionPlugin, listPlugin]}
+          initialView="multiMonthYear"
+          timeZone="UTC+2"
+          locale={frLocale}
+          multiMonthMaxColumns={2}
+          editable={true}
+          selectable={true}
+          select={(info) => selectFunc(info)}
+          unselectAuto={false}
+          contentHeight="70vmin"
+          displayEventTime={false}
+          events={initialEvents.data}
+          headerToolbar={{
+            left: "addItemButton",
+            center: "prev title next",
+            right: "plusButton,minButton",
+          }}
+          customButtons={{
+            addItemButton: {
+              text: "Ajouter",
+              click: () => addItemFunc(),
+            },
+            plusButton: {
+              text: "+",
+              click: () => zoomInFunc(),
+            },
+            minButton: {
+              text: "-",
+              click: () => zoomOutFunc(),
+            },
+          }}
+        />
+      )}
       {isOpen && (
         <AddItemModal
           isOpen={isOpen}
