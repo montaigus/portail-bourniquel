@@ -4,6 +4,8 @@ import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Agenda from "./pages/Agenda";
 import { Drawer } from "@mui/material";
+import Connexion from "./pages/Connexion";
+import Regles from "./pages/Regles";
 
 function App() {
   const [down, setDown] = useState(false);
@@ -36,6 +38,8 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route index element={<Agenda />} />
+            <Route path="/" element={<Connexion />} />
+            <Route path="regles" element={<Regles />} />
           </Routes>
         </BrowserRouter>
       </div>
